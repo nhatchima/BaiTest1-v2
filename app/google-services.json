@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "233862093890",
+    "project_id": "ungdungtest-501d8",
+    "storage_bucket": "ungdungtest-501d8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:233862093890:android:a46dbaabcba50a12c021db",
+        "android_client_info": {
+          "package_name": "com.example.ungdung"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "233862093890-lpsb1llgdstbgi333s2v78d6qhbh01ha.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtUKxGTHpUoZLFDgW7PdeAXXIX26JPuVM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "233862093890-lpsb1llgdstbgi333s2v78d6qhbh01ha.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
