@@ -3,6 +3,8 @@ package com.example.ungdung.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +27,7 @@ import com.example.ungdung.R;
 import com.example.ungdung.Util.CheckConnection;
 import com.example.ungdung.Util.Server;
 
+import com.example.ungdung.ViewModel.LoaiSpViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -53,6 +56,7 @@ public class LoaiSpActivity extends AppCompatActivity {
     ListView listView;
     List<LoaiVatPham> LoaiVatPhams;
     private LoaiSpAdapter dsAdapter;
+    private LoaiSpViewModel loaiSpViewModel;
     int id=0;
     String loaisanpham ="";
     String hinhanhsanpham= "";
@@ -66,9 +70,19 @@ public class LoaiSpActivity extends AppCompatActivity {
         initView();
         ActionToolBar();
 //        GetDuLieuSpMoiNhat();
-        CatchOnItemListView();
-        GetDulieuLoaiSp();
+//        CatchOnItemListView();
+//        GetDulieuLoaiSp();
 
+        loaiSpViewModel = new ViewModelProvider(this).get(LoaiSpViewModel.class);
+        loaiSpViewModel.getListLoaiSpLiveData().observe(this, new Observer<List<LoaiVatPham>>() {
+            @Override
+            public void onChanged(List<LoaiVatPham> loaiVatPhams) {
+
+                dsAdapter = new LoaiSpAdapter(loaiVatPhams,getApplicationContext());
+                listView.setAdapter(dsAdapter);
+                CatchOnItemListView(loaiVatPhams);
+            }
+        });
         //Get du lieu tai khoan Google
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
@@ -117,7 +131,7 @@ public class LoaiSpActivity extends AppCompatActivity {
                     }
                 });
     }
-    private void CatchOnItemListView() {
+    private void CatchOnItemListView(List<LoaiVatPham> loaiVatPhams) {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -126,7 +140,7 @@ public class LoaiSpActivity extends AppCompatActivity {
                         if(CheckConnection.haveNetworkConnection(getApplicationContext())){
                             Intent intent = new Intent(LoaiSpActivity.this, DanhSachSpActivity.class);
                             //truyen du lieu giua cac activity
-                            intent.putExtra("idloaivatpham",LoaiVatPhams.get(i).getId());
+                            intent.putExtra("idloaivatpham",loaiVatPhams.get(i).getId());
                             startActivity(intent);
                         }else{
                             CheckConnection.ShowToast(getApplicationContext(),"Check Internet Connection");
@@ -135,7 +149,7 @@ public class LoaiSpActivity extends AppCompatActivity {
                     case 1:
                         if(CheckConnection.haveNetworkConnection(getApplicationContext())){
                             Intent intent = new Intent(LoaiSpActivity.this, DanhSachSpActivity.class);
-                            intent.putExtra("idloaivatpham",LoaiVatPhams.get(i).getId());
+                            intent.putExtra("idloaivatpham",loaiVatPhams.get(i).getId());
                             startActivity(intent);
                         }else{
                             CheckConnection.ShowToast(getApplicationContext(),"Check Internet Connection");
@@ -188,34 +202,34 @@ public class LoaiSpActivity extends AppCompatActivity {
 //        requestQueue.add(jsonArrayRequest);
 //    }
 
-    private void GetDulieuLoaiSp(){
-        RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
-        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Server.pathloaisp, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                if(response!=null){
-                    for(int i=0;i<response.length();i++){
-                        try{
-                            JSONObject jsonObject=response.getJSONObject(i);
-                            id=jsonObject.getInt("idloaivatpham");
-                            loaisanpham=jsonObject.getString("tenloaivatpham");
-                            hinhanhsanpham=jsonObject.getString("hinhloaivatpham");
-                            LoaiVatPhams.add(new LoaiVatPham(id,loaisanpham,hinhanhsanpham));
-                            dsAdapter.notifyDataSetChanged();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        requestQueue.add(jsonArrayRequest);
-    }
+//    private void GetDulieuLoaiSp(){
+//        RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
+//        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Server.pathloaisp, new Response.Listener<JSONArray>() {
+//            @Override
+//            public void onResponse(JSONArray response) {
+//                if(response!=null){
+//                    for(int i=0;i<response.length();i++){
+//                        try{
+//                            JSONObject jsonObject=response.getJSONObject(i);
+//                            id=jsonObject.getInt("idloaivatpham");
+//                            loaisanpham=jsonObject.getString("tenloaivatpham");
+//                            hinhanhsanpham=jsonObject.getString("hinhloaivatpham");
+//                            LoaiVatPhams.add(new LoaiVatPham(id,loaisanpham,hinhanhsanpham));
+//                            dsAdapter.notifyDataSetChanged();
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        });
+//        requestQueue.add(jsonArrayRequest);
+//    }
 
     private void initView() {
         profileAvatar = findViewById(R.id.profileavatar);
@@ -224,9 +238,9 @@ public class LoaiSpActivity extends AppCompatActivity {
         toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
         btnSignOut = (Button) findViewById(R.id.btnsignout);
         listView= (ListView) findViewById(R.id.lvdanhsachsp);
-        LoaiVatPhams = new ArrayList<>();
-        dsAdapter = new LoaiSpAdapter(LoaiVatPhams,getApplicationContext());
-        listView.setAdapter(dsAdapter);
+//        LoaiVatPhams = new ArrayList<>();
+//        dsAdapter = new LoaiSpAdapter(LoaiVatPhams,getApplicationContext());
+//        listView.setAdapter(dsAdapter);
 
     }
 
@@ -244,11 +258,11 @@ public class LoaiSpActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(dsAdapter !=null){
-            dsAdapter.release();
-        }
-    }
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        if(dsAdapter !=null){
+//            dsAdapter.release();
+//        }
+//    }
 }

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.SignInButton;
@@ -39,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         if (mUser == null) {
             Toast.makeText(this, "Vui lòng đăng nhập", Toast.LENGTH_SHORT).show();
         }
-
 
         signInGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
