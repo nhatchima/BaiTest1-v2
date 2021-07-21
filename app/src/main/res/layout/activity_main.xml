@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<layout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    tools:context=".MainActivity"-->
-<!--    >-->
-<!--    <data>-->
-<!--        <variable-->
-<!--            name="LoginViewMdel"-->
-<!--            type="com.example.baitest1.LoginViewModel" />-->
-<!--    </data>-->
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
     android:padding="16dp"
     >
 
@@ -56,13 +45,25 @@
         android:ems="30"
         android:hint="@string/password" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtpassword"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="10dp"
+        android:text="@{LogInViewModel.message}"
+        android:textSize="20sp"
+        android:visibility="gone"
+
+        />
     <Button
         android:id="@+id/btnlogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/edtpassword"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/custom_button"
         android:text="Đăng Nhập"
         android:ems="10"
@@ -96,7 +97,7 @@
             android:layout_gravity="center_vertical"
             />
 
-        <com.facebook.login.widget.DeviceLoginButton
+        <com.facebook.login.widget.LoginButton
             android:id="@+id/btnfb"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
@@ -104,4 +105,3 @@
             android:layout_weight="1" />
     </LinearLayout>
 </RelativeLayout>
-    <!--</layout>-->

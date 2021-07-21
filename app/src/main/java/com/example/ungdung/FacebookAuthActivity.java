@@ -15,7 +15,10 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 
+import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
+import com.facebook.Profile;
+import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,10 +44,13 @@ public class FacebookAuthActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+
+
 
         callbackManager = CallbackManager.Factory.create();
         mAuth = FirebaseAuth.getInstance();
-
 
         LoginManager.getInstance().logInWithReadPermissions(this,Arrays.asList("public_profile"));
         LoginManager.getInstance().registerCallback(callbackManager,
@@ -76,6 +82,9 @@ public class FacebookAuthActivity extends MainActivity {
     @Override
     public void onStart() {
         super.onStart();
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        loaduserProfile(accessToken);
+
         AccessTokenTracker tracker =  new AccessTokenTracker() {
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
@@ -91,11 +100,13 @@ public class FacebookAuthActivity extends MainActivity {
         updateUI(currentUser);
     }
     private void loaduserProfile(AccessToken currentAccessToken) {
+        Profile.getCurrentProfile();
+
         GraphRequest request = GraphRequest.newMeRequest(currentAccessToken, ((object, response) -> {
             if (object != null) {
                 try {
-                    String name = object.getString("name");
-                    String email = object.getString("email");
+                    String name = object.getString("last name");
+                    String email = object.getString("name");
                     profileName.setText(name);
                     profileEmail.setText(email);
                 } catch (JSONException e) {
@@ -136,6 +147,5 @@ public class FacebookAuthActivity extends MainActivity {
     protected void onPause() {
         super.onPause();
         FirebaseAuth.getInstance().signOut();
-
     }
 }

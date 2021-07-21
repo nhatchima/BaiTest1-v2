@@ -24,6 +24,7 @@ import com.example.ungdung.MainActivity;
 import com.example.ungdung.R;
 import com.example.ungdung.Util.CheckConnection;
 import com.example.ungdung.Util.Server;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,14 +41,15 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.example.ungdung.MainActivity.mGoogleSignInClient;
+import static com.example.ungdung.GoogleSignInActivity.mGoogleSignInClient;
+
 
 public class LoaiSpActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     Button btnSignOut;
     CircleImageView profileAvatar;
-   public static TextView profileName, profileEmail;
+    public static TextView profileName, profileEmail;
     ListView listView;
     List<LoaiVatPham> LoaiVatPhams;
     private LoaiSpAdapter dsAdapter;
@@ -67,7 +69,7 @@ public class LoaiSpActivity extends AppCompatActivity {
         CatchOnItemListView();
         GetDulieuLoaiSp();
 
-
+        //Get du lieu tai khoan Google
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
             profileName.setText(acct.getDisplayName());

@@ -1,7 +1,7 @@
 package com.example.ungdung.Util;
 
 public class Server {
-    public static String localhost ="192.168.1.4";
+    public static String localhost ="192.168.1.5";
     public static String pathloaisp ="http://" +localhost + ":8888/server/servercon/getloaisp.php";
     public static String pathspmoinhat ="http://" +localhost + ":8888/server/servercon/getspmoinhat.php";
     public static String pathspkiem ="http://" +localhost + ":8888/server/servercon/getsp.php?page=";
