@@ -15,17 +15,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.ungdung.Adapter.LoaiSpAdapter;
 import com.example.ungdung.Model.LoaiVatPham;
 import com.example.ungdung.MainActivity;
 import com.example.ungdung.R;
 import com.example.ungdung.Util.CheckConnection;
-import com.example.ungdung.Util.Server;
 
 import com.example.ungdung.ViewModel.LoaiSpViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -35,16 +29,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.example.ungdung.GoogleSignInActivity.mGoogleSignInClient;
+import static com.example.ungdung.Activity.GoogleSignInActivity.mGoogleSignInClient;
 
 
 public class LoaiSpActivity extends AppCompatActivity {
@@ -57,9 +47,7 @@ public class LoaiSpActivity extends AppCompatActivity {
     List<LoaiVatPham> LoaiVatPhams;
     private LoaiSpAdapter dsAdapter;
     private LoaiSpViewModel loaiSpViewModel;
-    int id=0;
-    String loaisanpham ="";
-    String hinhanhsanpham= "";
+
 
 
     @Override
@@ -77,12 +65,11 @@ public class LoaiSpActivity extends AppCompatActivity {
         loaiSpViewModel.getListLoaiSpLiveData().observe(this, new Observer<List<LoaiVatPham>>() {
             @Override
             public void onChanged(List<LoaiVatPham> loaiVatPhams) {
-
-                dsAdapter = new LoaiSpAdapter(loaiVatPhams,getApplicationContext());
-                listView.setAdapter(dsAdapter);
+                dsAdapter.setLoaiVatPhams(loaiVatPhams);
                 CatchOnItemListView(loaiVatPhams);
             }
         });
+        loaiSpViewModel.fetchData();
         //Get du lieu tai khoan Google
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
@@ -201,7 +188,7 @@ public class LoaiSpActivity extends AppCompatActivity {
 //        });
 //        requestQueue.add(jsonArrayRequest);
 //    }
-
+//
 //    private void GetDulieuLoaiSp(){
 //        RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
 //        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Server.pathloaisp, new Response.Listener<JSONArray>() {
@@ -238,9 +225,10 @@ public class LoaiSpActivity extends AppCompatActivity {
         toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
         btnSignOut = (Button) findViewById(R.id.btnsignout);
         listView= (ListView) findViewById(R.id.lvdanhsachsp);
-//        LoaiVatPhams = new ArrayList<>();
-//        dsAdapter = new LoaiSpAdapter(LoaiVatPhams,getApplicationContext());
-//        listView.setAdapter(dsAdapter);
+
+        LoaiVatPhams = new ArrayList<>();
+        dsAdapter = new LoaiSpAdapter(LoaiVatPhams,getApplicationContext());
+        listView.setAdapter(dsAdapter);
 
     }
 
@@ -258,11 +246,11 @@ public class LoaiSpActivity extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        if(dsAdapter !=null){
-//            dsAdapter.release();
-//        }
-//    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(dsAdapter !=null){
+            dsAdapter.release();
+        }
+    }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +25,10 @@ public class LoaiSpAdapter extends BaseAdapter {
         this.context = context;
     }
 
+    public void setLoaiVatPhams(List<LoaiVatPham> listLoaiVatPham){
+        loaiVatPhams = listLoaiVatPham;
+        notifyDataSetChanged();
+    }
     @Override
     public int getCount() {
         return loaiVatPhams.size();
@@ -55,7 +60,6 @@ public class LoaiSpAdapter extends BaseAdapter {
             view= inflater.inflate(R.layout.lv_loaivatpham,null);
             viewHolder.tvName = (TextView) view.findViewById(R.id.txtName);
             viewHolder.imgAvatar =(ImageView) view.findViewById(R.id.avatar);
-
             view.setTag(viewHolder);
 
 

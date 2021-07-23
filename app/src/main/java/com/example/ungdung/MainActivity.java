@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import com.example.ungdung.Activity.FacebookAuthActivity;
+import com.example.ungdung.Activity.GoogleSignInActivity;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.SignInButton;
@@ -22,12 +24,12 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity {
 
     public static GoogleSignInClient mGoogleSignInClient;
-    static final int RC_SIGN_IN = 0;
+    public static final int RC_SIGN_IN = 0;
     public SignInButton signInGoogle;
     LoginButton signInFacebook;
     EditText edtUser, edtPass;
     Button btnLogin;
-    FirebaseAuth mAuth;
+    public static FirebaseAuth mAuth;
     FirebaseUser mUser;
 
     @Override

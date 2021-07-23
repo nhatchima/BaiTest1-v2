@@ -19,7 +19,7 @@
         android:orientation="horizontal"
         android:layout_below="@+id/toolbar"
         android:id="@+id/profile"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="5dp"
         >
 
@@ -73,7 +73,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/profile"
         android:textColor="@color/black"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         />
     <ListView
         android:id="@+id/lvdanhsachsp"
@@ -81,6 +81,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView6"
         android:layout_above="@+id/btnsignout"
+        android:layout_marginTop="30dp"
         />
     <Button
         android:id="@+id/btnsignout"

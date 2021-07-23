@@ -1,6 +1,11 @@
 package com.example.ungdung.ViewModel;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -10,8 +15,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.ungdung.Activity.DanhSachSpActivity;
+import com.example.ungdung.Activity.LoaiSpActivity;
 import com.example.ungdung.Adapter.LoaiSpAdapter;
 import com.example.ungdung.Model.LoaiVatPham;
+import com.example.ungdung.Util.CheckConnection;
 import com.example.ungdung.Util.Server;
 
 import org.json.JSONArray;
@@ -24,36 +32,30 @@ import java.util.List;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class LoaiSpViewModel extends ViewModel {
-    private MutableLiveData<List<LoaiVatPham>> mListLoaiSpLiveData;
-    private List<LoaiVatPham> mListLoaiSp;
-    LoaiSpAdapter dsAdapter;
 
-    int id=0;
-    String loaisanpham ="";
-    String hinhanhsanpham= "";
+    private MutableLiveData<List<LoaiVatPham>> mListLoaiSpLiveData;
+
 
     public LoaiSpViewModel() {
         mListLoaiSpLiveData = new MutableLiveData<>();
 
-        GetDulieuLoaiSp();
-        initData();
+    }
 
-    }
-    private void initData() {
-        mListLoaiSp = new ArrayList<>();
-        dsAdapter = new LoaiSpAdapter(mListLoaiSp,getApplicationContext());
-        mListLoaiSpLiveData.setValue(mListLoaiSp);
-    }
 
 
     public MutableLiveData<List<LoaiVatPham>> getListLoaiSpLiveData() {
         return mListLoaiSpLiveData;
     }
-    private void GetDulieuLoaiSp(){
+
+    public void fetchData(){
         RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
         JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Server.pathloaisp, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                List<LoaiVatPham> loaiVatPhams = new ArrayList<>();
+                int id=0;
+                String loaisanpham ="";
+                String hinhanhsanpham= "";
                 if(response!=null){
                     for(int i=0;i<response.length();i++){
                         try{
@@ -61,8 +63,8 @@ public class LoaiSpViewModel extends ViewModel {
                             id=jsonObject.getInt("idloaivatpham");
                             loaisanpham=jsonObject.getString("tenloaivatpham");
                             hinhanhsanpham=jsonObject.getString("hinhloaivatpham");
-                            mListLoaiSp.add(new LoaiVatPham(id,loaisanpham,hinhanhsanpham));
-                            dsAdapter.notifyDataSetChanged();
+                            loaiVatPhams.add(new LoaiVatPham(id,loaisanpham,hinhanhsanpham));
+                            mListLoaiSpLiveData.setValue(loaiVatPhams);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

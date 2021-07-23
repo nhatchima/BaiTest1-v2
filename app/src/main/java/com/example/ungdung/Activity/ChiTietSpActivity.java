@@ -4,6 +4,7 @@ package com.example.ungdung.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -11,56 +12,75 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.android.billingclient.api.BillingClient;
 import com.example.ungdung.R;
 import com.example.ungdung.Model.VatPham;
 import com.razorpay.Checkout;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
+
 public class ChiTietSpActivity extends AppCompatActivity {
 
+    BillingClient billingClient;
     Toolbar toolbar;
     RelativeLayout btnpay;
+    TextView txtname , txtgia;
     ImageView imgavatar;
     Spinner spinner;
-    TextView txtname , txtgia;
-    String tenchitiet = "";
-    int giachitiet = 0;
-    int idsp = 0;
+//    String tenchitiet = "";
+//    int giachitiet = 0;
+//    int idsp = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_sp);
+
         initView();
         CatchEventSpinner();
         ActionToolBar();
         Checkout.clearUserData(getApplicationContext());
 
         // Nhậnn thông tin từ DanhSachSp truyền sang
-        int soluong = Integer.parseInt((spinner.getSelectedItem().toString()));
         Bundle bundle = getIntent().getExtras();
         if (bundle == null) {
             return;
         }
         VatPham vatPham = (VatPham) bundle.get("thongtinvatpham");
+        DecimalFormat decimalFormat= new DecimalFormat("###,###,###");
         txtname.setText(vatPham.getTenvatpham());
-        txtgia.setText(vatPham.getGiavatpham().toString() + " VND");
+        txtgia.setText(decimalFormat.format(vatPham.getGiavatpham()) + " VND");
         Picasso.get().load(vatPham.getHinhanhvatpham())
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.hot)
                 .into(imgavatar);
 
-        idsp = vatPham.getId();
-        tenchitiet = vatPham.getTenvatpham();
-        giachitiet = vatPham.getGiavatpham();
-        int giasanpham = giachitiet * 100 * soluong;
-
-        String hinhanh = vatPham.getHinhanhvatpham();
         btnpay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ChiTietSpActivity.this, "Thanh toan", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ChiTietSpActivity.this, PurchaseItemActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("thongtinvatpham",vatPham);
+                intent.putExtras(bundle);
+                startActivity(intent);
+//                if (billingClient.isReady()){
+//                    SkuDetailsParams params = SkuDetailsParams.newBuilder()
+//                            .setSkusList((Arrays.asList("","")))
+//                            .setType(BillingClient.SkuType.INAPP)
+//                            .build();
+//                    billingClient.querySkuDetailsAsync(params, new SkuDetailsResponseListener() {
+//                        @Override
+//                        public void onSkuDetailsResponse(@NonNull @NotNull BillingResult billingResult, @Nullable @org.jetbrains.annotations.Nullable List<SkuDetails> list) {
+//                             if(billingResult.getResponseCode()== BillingClient.BillingResponseCode.OK){
+////                                 loadProductToRecyclerView(list);
+//                             }else{
+//                                 Toast.makeText(ChiTietSpActivity.this, "Error code ", Toast.LENGTH_SHORT).show();
+//                             }
+//                        }
+//                    });
+//                }
+//                Toast.makeText(ChiTietSpActivity.this, "Thanh toan", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -84,10 +104,9 @@ public class ChiTietSpActivity extends AppCompatActivity {
 //                }catch (JSONException e){
 //                    e.printStackTrace();
 //                }
-
-    private void CatchEventSpinner() {
+    public void CatchEventSpinner() {
         Integer[] soluong = new Integer [] {1,2,3,4,5,6,7,8,9,10};
-        ArrayAdapter<Integer> arrayAdapter= new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,soluong);
+        ArrayAdapter<Integer> arrayAdapter= new ArrayAdapter<Integer>(getApplicationContext(),android.R.layout.simple_spinner_item,soluong);
         spinner.setAdapter(arrayAdapter);
 
     }
@@ -106,16 +125,13 @@ public class ChiTietSpActivity extends AppCompatActivity {
     }
     private void initView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar_chitietvatpham);
-        spinner = (Spinner) findViewById(R.id.spinnerchitietsp);
-        imgavatar = (ImageView) findViewById(R.id.imageview_chitietsp);
         btnpay = (RelativeLayout) findViewById(R.id.googlePayButton);
         txtname = (TextView) findViewById(R.id.txtchitietsp);
         txtgia = (TextView) findViewById(R.id.txtgiachitietsp);
-
+        spinner = (Spinner) findViewById(R.id.spinnerchitietsp);
+        imgavatar = (ImageView) findViewById(R.id.imageview_chitietsp);
 
     }
-
-
 //    @Override
 //    public void onPaymentSuccess(String s) {
 //        AlertDialog.Builder builder = new AlertDialog.Builder(this);

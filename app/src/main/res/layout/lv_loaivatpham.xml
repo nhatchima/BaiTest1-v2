@@ -29,6 +29,7 @@
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/avatar"
             android:text="Kiếm"
+            android:textColor="@color/black"
             android:textSize="30sp" />
 
     </RelativeLayout>

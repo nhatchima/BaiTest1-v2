@@ -3,6 +3,8 @@ package com.example.ungdung.Activity;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +24,7 @@ import com.example.ungdung.R;
 import com.example.ungdung.Util.CheckConnection;
 import com.example.ungdung.Util.Server;
 import com.example.ungdung.Model.VatPham;
+import com.example.ungdung.ViewModel.DanhSachSpViewModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,14 +32,16 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DanhSachSpActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     RecyclerView recyclerView;
-    ArrayList<VatPham> vatPhams;
+    List<VatPham> vatPhams;
     DanhSachSpAdapter spAdapter;
+    private DanhSachSpViewModel danhSachSpViewModel;
     int idkiem = 0;
     int page = 1;
 
@@ -45,12 +50,20 @@ public class DanhSachSpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_danh_sach_sp);
 
-        initView();
         GetIdLoaiSanPham();
-//        GetDuLieuSpMoiNhat();
-        GetData(page);
+        initView();
+//       GetDuLieuSpMoiNhat();
+//       GetData(page);
         ActionToolBar();
 
+        danhSachSpViewModel = new ViewModelProvider(this).get(DanhSachSpViewModel.class);
+        danhSachSpViewModel.getMutableLiveData().observe(this, new Observer<List<VatPham>>() {
+            @Override
+            public void onChanged(List<VatPham> vatPhams) {
+                spAdapter.setVatPhams(vatPhams);
+            }
+        });
+        danhSachSpViewModel.fetchData(page,idkiem);
     }
     //    private void GetDuLieuSpMoiNhat() {
 //        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -87,54 +100,54 @@ public class DanhSachSpActivity extends AppCompatActivity {
 //        });
 //        requestQueue.add(jsonArrayRequest);
 //    }
-    private void GetData(int Page) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        String duongdan = Server.pathspkiem + String.valueOf(Page);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, duongdan, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                int id = 0;
-                String tenVatPham = "";
-                int giaVatPham = 0;
-                String hinhanhVatPham = "";
-                int IdVatPham = 0;
-                if (response != null && response.length() != 2) {
-                    try {
-                        JSONArray jsonArray = new JSONArray(response);
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            id = jsonObject.getInt("id");
-                            IdVatPham = jsonObject.getInt("idloaivatpham");
-                            tenVatPham = jsonObject.getString("tenvatpham");
-                            giaVatPham = jsonObject.getInt("giavatpham");
-                            hinhanhVatPham = jsonObject.getString("anhvatpham");
-                            vatPhams.add(new VatPham(id, IdVatPham,tenVatPham,giaVatPham, hinhanhVatPham));
-                            spAdapter.notifyDataSetChanged();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-
-                    CheckConnection.ShowToast(getApplicationContext(), "Loading Full");
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }) {
-            @Nullable
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> param = new HashMap<String, String>();
-                param.put("idloaivatpham", String.valueOf(idkiem));
-                return param;
-            }
-        };
-        requestQueue.add(stringRequest);
-    }
+//    private void GetData(int Page) {
+//        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+//        String duongdan = Server.pathspkiem + String.valueOf(Page);
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, duongdan, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                int id = 0;
+//                String tenVatPham = "";
+//                int giaVatPham = 0;
+//                String hinhanhVatPham = "";
+//                int IdVatPham = 0;
+//                if (response != null && response.length() != 2) {
+//                    try {
+//                        JSONArray jsonArray = new JSONArray(response);
+//                        for (int i = 0; i < jsonArray.length(); i++) {
+//                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                            id = jsonObject.getInt("id");
+//                            IdVatPham = jsonObject.getInt("idloaivatpham");
+//                            tenVatPham = jsonObject.getString("tenvatpham");
+//                            giaVatPham = jsonObject.getInt("giavatpham");
+//                            hinhanhVatPham = jsonObject.getString("anhvatpham");
+//                            vatPhams.add(new VatPham(id, IdVatPham,tenVatPham,giaVatPham, hinhanhVatPham));
+//                            spAdapter.notifyDataSetChanged();
+//                        }
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                } else {
+//
+//                    CheckConnection.ShowToast(getApplicationContext(), "Loading Full");
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        }) {
+//            @Nullable
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                HashMap<String, String> param = new HashMap<String, String>();
+//                param.put("idloaivatpham", String.valueOf(idkiem));
+//                return param;
+//            }
+//        };
+//        requestQueue.add(stringRequest);
+//    }
     private void GetIdLoaiSanPham() {
         idkiem = getIntent().getIntExtra("idloaivatpham", -1);
         Log.d("giatriloaisanpham", idkiem + "");
@@ -156,10 +169,11 @@ public class DanhSachSpActivity extends AppCompatActivity {
     private void initView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar_danhsachvatpham);
         recyclerView = (RecyclerView) findViewById(R.id.lvchitietsp);
-        vatPhams = new ArrayList<>();
-        spAdapter = new DanhSachSpAdapter(getApplicationContext(),vatPhams);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+
+        vatPhams = new ArrayList<>();
+        spAdapter = new DanhSachSpAdapter(getApplicationContext(),vatPhams);
         recyclerView.setAdapter(spAdapter);
 
     }

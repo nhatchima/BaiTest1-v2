@@ -22,17 +22,21 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DanhSachSpAdapter extends RecyclerView.Adapter<DanhSachSpAdapter.ItemHolder> {
 
     Context context;
-    ArrayList<VatPham> vatPhams;
+    List<VatPham> vatPhams;
 
-    public DanhSachSpAdapter(Context context, ArrayList<VatPham> vatPhams) {
+    public DanhSachSpAdapter(Context context, List<VatPham> vatPhams) {
         this.context = context;
         this.vatPhams = vatPhams;
     }
-
+    public void setVatPhams(List<VatPham> listVatPham){
+        vatPhams = listVatPham;
+        notifyDataSetChanged();
+    }
     @NonNull
     @NotNull
     @Override
@@ -65,8 +69,6 @@ public class DanhSachSpAdapter extends RecyclerView.Adapter<DanhSachSpAdapter.It
         bundle.putSerializable("thongtinvatpham",vatPham);
         intent.putExtras(bundle);
         context.startActivity(intent);
-
-
     }
     @Override
     public int getItemCount() {

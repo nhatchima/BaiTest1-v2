@@ -1,4 +1,4 @@
-package com.example.ungdung;
+package com.example.ungdung.Activity;
 
 import androidx.annotation.NonNull;
 
@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 
-import com.example.ungdung.Activity.LoaiSpActivity;
+import com.example.ungdung.MainActivity;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -39,7 +39,6 @@ import static com.example.ungdung.Activity.LoaiSpActivity.profileName;
 public class FacebookAuthActivity extends MainActivity {
 
     CallbackManager callbackManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
