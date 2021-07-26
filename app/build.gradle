@@ -9,9 +9,22 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.0"
-
+    signingConfigs {
+        debug {
+            keyAlias 'demosdkmain'
+            keyPassword 'B23041D596A5F4BCE51042F89E9BEBF4'
+            storeFile file('\\demosdkmain.jks')
+            storePassword 'B23041D596A5F4BCE51042F89E9BEBF4'
+        }
+        release {
+            keyAlias 'demosdkmain'
+            keyPassword 'B23041D596A5F4BCE51042F89E9BEBF4'
+            storeFile file('\\demosdkmain.jks')
+            storePassword 'B23041D596A5F4BCE51042F89E9BEBF4'
+        }
+    }
     defaultConfig {
-        applicationId "com.example.ungdung"
+        applicationId "com.base.sdk.payment"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
@@ -19,7 +32,6 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             minifyEnabled false

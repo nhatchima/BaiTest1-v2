@@ -1,11 +1,5 @@
 package com.example.ungdung.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,12 +9,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.ungdung.Adapter.LoaiSpAdapter;
-import com.example.ungdung.Model.LoaiVatPham;
 import com.example.ungdung.MainActivity;
+import com.example.ungdung.Model.LoaiVatPham;
 import com.example.ungdung.R;
 import com.example.ungdung.Util.CheckConnection;
-
 import com.example.ungdung.ViewModel.LoaiSpViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -69,6 +68,7 @@ public class LoaiSpActivity extends AppCompatActivity {
                 CatchOnItemListView(loaiVatPhams);
             }
         });
+
         loaiSpViewModel.fetchData();
         //Get du lieu tai khoan Google
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);

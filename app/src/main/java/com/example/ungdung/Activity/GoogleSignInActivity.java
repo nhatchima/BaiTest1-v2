@@ -68,7 +68,7 @@ public class GoogleSignInActivity extends MainActivity {
             Intent intent = new Intent(this, LoaiSpActivity.class);
             startActivity(intent);
         } catch (ApiException e) {
-
+            Toast.makeText(this, "Đăng Nhập Thất Bại", Toast.LENGTH_SHORT).show();
         }
     }
 

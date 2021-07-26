@@ -6,8 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
 import com.android.billingclient.api.BillingClient;
@@ -16,11 +17,8 @@ import com.android.billingclient.api.BillingResult;
 import com.android.billingclient.api.ConsumeParams;
 import com.android.billingclient.api.ConsumeResponseListener;
 import com.android.billingclient.api.Purchase;
-import com.android.billingclient.api.PurchasesUpdatedListener;
-import com.example.ungdung.Activity.ChiTietSpActivity;
 import com.example.ungdung.Model.VatPham;
 import com.example.ungdung.R;
-import com.example.ungdung.Util.BillingClientSetup;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
@@ -78,48 +76,48 @@ public class PurchaseItemActivity extends ChiTietSpActivity {
             }
         });
     }
-//    private void setupBillingClient() {
-//        consumeResponseListener = (ConsumeResponseListener) (billingResult,s)->{
-//            if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK)
-//                Toast.makeText(this, "Consume OK", Toast.LENGTH_SHORT).show();
-//
-//        };
-//        billingClient = BillingClientSetup.getInstance(this, (PurchasesUpdatedListener) this);
-//        billingClient.startConnection(new BillingClientStateListener() {
-//            @Override
-//            public void onBillingServiceDisconnected() {
-//                Toast.makeText(PurchaseItemActivity.this, "You are disconnected from Billing Service", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onBillingSetupFinished(@NonNull @NotNull BillingResult billingResult) {
-//                if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK){
-//                    Toast.makeText(PurchaseItemActivity.this, "Success to connect billing", Toast.LENGTH_SHORT).show();
-//                    List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP)
-//                                .getPurchasesList();
-//                    handleItemAlreadyPurchase(purchases);
-//                }else{
-//                    Toast.makeText(PurchaseItemActivity.this, "Error code" + billingResult.getResponseCode(), Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-//    }
-//
-//    private void handleItemAlreadyPurchase(List<Purchase> purchases) {
-//        StringBuilder purchasedItem = new StringBuilder(txtThongbao.getText());
-//        for(Purchase purchase : purchases)
-//        {
-//            if(purchase.getSkus().equals("")){
-//                ConsumeParams consumeParams = ConsumeParams.newBuilder()
-//                        .setPurchaseToken(purchase.getPurchaseToken())
-//                        .build();
-//                billingClient.consumeAsync(consumeParams,consumeResponseListener);
-//            }
-//            purchasedItem.append("\n" +purchase.getSkus()).append("\n");
-//
-//        }
-//        txtThongbao.setText(purchasedItem.toString());
-//        txtThongbao.setVisibility(View.VISIBLE);
-//    }
+    private void setupBillingClient() {
+        consumeResponseListener = (ConsumeResponseListener) (billingResult,s)->{
+            if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK)
+                Toast.makeText(this, "Consume OK", Toast.LENGTH_SHORT).show();
+
+        };
+//        billingClient = Security.getInstance(this, (PurchasesUpdatedListener) this);
+        billingClient.startConnection(new BillingClientStateListener() {
+            @Override
+            public void onBillingServiceDisconnected() {
+                Toast.makeText(PurchaseItemActivity.this, "You are disconnected from Billing Service", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onBillingSetupFinished(@NonNull @NotNull BillingResult billingResult) {
+                if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK){
+                    Toast.makeText(PurchaseItemActivity.this, "Success to connect billing", Toast.LENGTH_SHORT).show();
+                    List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP)
+                                .getPurchasesList();
+                    handleItemAlreadyPurchase(purchases);
+                }else{
+                    Toast.makeText(PurchaseItemActivity.this, "Error code" + billingResult.getResponseCode(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void handleItemAlreadyPurchase(List<Purchase> purchases) {
+        StringBuilder purchasedItem = new StringBuilder(txtThongbao.getText());
+        for(Purchase purchase : purchases)
+        {
+            if(purchase.getSkus().equals("")){
+                ConsumeParams consumeParams = ConsumeParams.newBuilder()
+                        .setPurchaseToken(purchase.getPurchaseToken())
+                        .build();
+                billingClient.consumeAsync(consumeParams,consumeResponseListener);
+            }
+            purchasedItem.append("\n" +purchase.getSkus()).append("\n");
+
+        }
+        txtThongbao.setText(purchasedItem.toString());
+        txtThongbao.setVisibility(View.VISIBLE);
+    }
 
 }

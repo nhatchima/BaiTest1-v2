@@ -1,12 +1,5 @@
 package com.example.ungdung.ViewModel;
 
-import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -15,11 +8,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.ungdung.Activity.DanhSachSpActivity;
-import com.example.ungdung.Activity.LoaiSpActivity;
-import com.example.ungdung.Adapter.LoaiSpAdapter;
 import com.example.ungdung.Model.LoaiVatPham;
-import com.example.ungdung.Util.CheckConnection;
 import com.example.ungdung.Util.Server;
 
 import org.json.JSONArray;
@@ -38,10 +27,7 @@ public class LoaiSpViewModel extends ViewModel {
 
     public LoaiSpViewModel() {
         mListLoaiSpLiveData = new MutableLiveData<>();
-
     }
-
-
 
     public MutableLiveData<List<LoaiVatPham>> getListLoaiSpLiveData() {
         return mListLoaiSpLiveData;
