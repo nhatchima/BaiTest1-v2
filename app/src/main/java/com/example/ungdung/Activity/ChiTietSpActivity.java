@@ -34,7 +34,6 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,9 +66,8 @@ public class ChiTietSpActivity extends AppCompatActivity implements PurchasesUpd
             return;
         }
         VatPham vatPham = (VatPham) bundle.get("thongtinvatpham");
-        DecimalFormat decimalFormat= new DecimalFormat("###,###,###");
         txtname.setText(vatPham.getTenvatpham());
-        txtgia.setText(decimalFormat.format(vatPham.getGiavatpham()) + " VND");
+        txtgia.setText((vatPham.getGiavatpham()));
         Picasso.get().load(vatPham.getHinhanhvatpham())
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.hot)
@@ -79,11 +77,6 @@ public class ChiTietSpActivity extends AppCompatActivity implements PurchasesUpd
         btnpay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(ChiTietSpActivity.this, PurchaseItemActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("thongtinvatpham",vatPham);
-//                intent.putExtras(bundle);
-//                startActivity(intent);
                 setBillingClient();
 
             }
@@ -145,7 +138,6 @@ public class ChiTietSpActivity extends AppCompatActivity implements PurchasesUpd
             }
         });
     }
-
     public void handlePurchase(Purchase purchase) {
 
         ConsumeParams consumeParams = ConsumeParams.newBuilder()
@@ -176,26 +168,6 @@ public class ChiTietSpActivity extends AppCompatActivity implements PurchasesUpd
             // Handle any other error codes.
         }
     }
-    //                  Razor Payment
-//                Checkout checkout = new Checkout();
-//
-//                checkout.setKeyID("rzp_test_bDkqwPKKfkmVI5");
-////                checkout.setImage(Integer.parseInt(hinhanh));
-//
-//                JSONObject object = new JSONObject();
-//                try {
-//                    object.put("name",tenchitiet);
-//                    object.put("description","Số Lượng" + soluong);
-//                    object.put("image",hinhanh);
-//                    object.put("theme.color","#0093DD");
-//                    object.put("currency","INR");
-//                    object.put("amount",giasanpham);
-//                    object.put("prefill.contact","0397625171");
-//                    object.put("prefill.email","datnguyen@gmail.com");
-//                    checkout.open(ChiTietSpActivity.this,object);
-//                }catch (JSONException e){
-//                    e.printStackTrace();
-//                }
     public void CatchEventSpinner() {
         Integer[] soluong = new Integer [] {1,2,3,4,5,6,7,8,9,10};
         ArrayAdapter<Integer> arrayAdapter= new ArrayAdapter<Integer>(getApplicationContext(),android.R.layout.simple_spinner_item,soluong);
@@ -224,18 +196,6 @@ public class ChiTietSpActivity extends AppCompatActivity implements PurchasesUpd
         imgavatar = (ImageView) findViewById(R.id.imageview_chitietsp);
 
     }
-//    @Override
-//    public void onPaymentSuccess(String s) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("Payment ID");
-//        builder.setMessage(s);
-//        builder.show();
-//    }
-//
-//    @Override
-//    public void onPaymentError(int i, String s) {
-//        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-//    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

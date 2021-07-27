@@ -14,14 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ungdung.Activity.ChiTietSpActivity;
-import com.example.ungdung.R;
 import com.example.ungdung.Model.VatPham;
+import com.example.ungdung.R;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DanhSachSpAdapter extends RecyclerView.Adapter<DanhSachSpAdapter.ItemHolder> {
@@ -50,8 +48,8 @@ public class DanhSachSpAdapter extends RecyclerView.Adapter<DanhSachSpAdapter.It
     public void onBindViewHolder(@NonNull @NotNull DanhSachSpAdapter.ItemHolder holder, int position) {
         final VatPham vatPham = vatPhams.get(position);
         holder.txttensp.setText(vatPham.getTenvatpham());
-        DecimalFormat decimalFormat= new DecimalFormat("###,###,###");
-        holder.txtgiasp.setText("Giá: "+ decimalFormat.format(vatPham.getGiavatpham())+" VNĐ");
+//        DecimalFormat decimalFormat= new DecimalFormat("###,###,###");
+        holder.txtgiasp.setText("Giá: "+ (vatPham.getGiavatpham())+" VNĐ");
         Picasso.get().load(vatPham.getHinhanhvatpham())
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.hot)

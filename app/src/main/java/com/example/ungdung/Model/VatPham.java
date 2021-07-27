@@ -6,15 +6,19 @@ public class VatPham implements Serializable {
     private int id;
     private int idloaivatpham;
     private String tenvatpham;
-    private Integer giavatpham;
-    private String hinhanhvatpham;
+    private String giavatpham;
+    private int hinhanhvatpham;
 
-    public VatPham(int id, int idloaivatpham, String tenvatpham, Integer giavatpham, String hinhanhvatpham) {
+    public VatPham(int id, int idloaivatpham, String tenvatpham, String giavatpham, int hinhanhvatpham) {
         this.id = id;
         this.idloaivatpham = idloaivatpham;
         this.tenvatpham = tenvatpham;
         this.giavatpham = giavatpham;
         this.hinhanhvatpham = hinhanhvatpham;
+    }
+
+    public VatPham() {
+
     }
 
     public int getId() {
@@ -41,19 +45,19 @@ public class VatPham implements Serializable {
         this.tenvatpham = tenvatpham;
     }
 
-    public Integer getGiavatpham() {
+    public String getGiavatpham() {
         return giavatpham;
     }
 
-    public void setGiavatpham(Integer giavatpham) {
+    public void setGiavatpham(String giavatpham) {
         this.giavatpham = giavatpham;
     }
 
-    public String getHinhanhvatpham() {
+    public int getHinhanhvatpham() {
         return hinhanhvatpham;
     }
 
-    public void setHinhanhvatpham(String hinhanhvatpham) {
+    public void setHinhanhvatpham(int hinhanhvatpham) {
         this.hinhanhvatpham = hinhanhvatpham;
     }
 }

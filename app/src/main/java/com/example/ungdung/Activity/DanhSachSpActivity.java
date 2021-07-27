@@ -1,6 +1,9 @@
 package com.example.ungdung.Activity;
 
-import androidx.annotation.Nullable;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
@@ -8,32 +11,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.ungdung.Adapter.DanhSachSpAdapter;
-import com.example.ungdung.R;
-import com.example.ungdung.Util.CheckConnection;
-import com.example.ungdung.Util.Server;
 import com.example.ungdung.Model.VatPham;
-import com.example.ungdung.ViewModel.DanhSachSpViewModel;
+import com.example.ungdung.R;
+import com.example.ungdung.ViewModel.LoaiSpViewModel;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DanhSachSpActivity extends AppCompatActivity {
 
@@ -41,7 +24,7 @@ public class DanhSachSpActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     List<VatPham> vatPhams;
     DanhSachSpAdapter spAdapter;
-    private DanhSachSpViewModel danhSachSpViewModel;
+    private LoaiSpViewModel loaiSpViewModel;
     int idkiem = 0;
     int page = 1;
 
@@ -56,14 +39,18 @@ public class DanhSachSpActivity extends AppCompatActivity {
 //       GetData(page);
         ActionToolBar();
 
-        danhSachSpViewModel = new ViewModelProvider(this).get(DanhSachSpViewModel.class);
-        danhSachSpViewModel.getMutableLiveData().observe(this, new Observer<List<VatPham>>() {
+        loaiSpViewModel = new ViewModelProvider(this).get(LoaiSpViewModel.class);
+        loaiSpViewModel.returnData(idkiem);
+        loaiSpViewModel.getListVatPhamLiveData().observe(this, new Observer<List<VatPham>>() {
             @Override
             public void onChanged(List<VatPham> vatPhams) {
-                spAdapter.setVatPhams(vatPhams);
+
+                spAdapter = new DanhSachSpAdapter(getApplicationContext(),vatPhams);
+                recyclerView.setAdapter(spAdapter);
             }
         });
-        danhSachSpViewModel.fetchData(page,idkiem);
+//        danhSachSpViewModel.fetchData(page,idkiem);
+
     }
     //    private void GetDuLieuSpMoiNhat() {
 //        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -172,9 +159,9 @@ public class DanhSachSpActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
 
-        vatPhams = new ArrayList<>();
-        spAdapter = new DanhSachSpAdapter(getApplicationContext(),vatPhams);
-        recyclerView.setAdapter(spAdapter);
+//        vatPhams = new ArrayList<>();
+//        spAdapter = new DanhSachSpAdapter(getApplicationContext(),vatPhams);
+//        recyclerView.setAdapter(spAdapter);
 
     }
 }

@@ -56,20 +56,23 @@ public class LoaiSpActivity extends AppCompatActivity {
 
         initView();
         ActionToolBar();
-//        GetDuLieuSpMoiNhat();
 //        CatchOnItemListView();
+//        GetDuLieuSpMoiNhat();
 //        GetDulieuLoaiSp();
 
         loaiSpViewModel = new ViewModelProvider(this).get(LoaiSpViewModel.class);
         loaiSpViewModel.getListLoaiSpLiveData().observe(this, new Observer<List<LoaiVatPham>>() {
             @Override
             public void onChanged(List<LoaiVatPham> loaiVatPhams) {
-                dsAdapter.setLoaiVatPhams(loaiVatPhams);
+//                dsAdapter.setLoaiVatPhams(loaiVatPhams);
+//                CatchOnItemListView(loaiVatPhams);
+                dsAdapter = new LoaiSpAdapter(loaiVatPhams,getApplicationContext());
+                listView.setAdapter(dsAdapter);
                 CatchOnItemListView(loaiVatPhams);
             }
         });
 
-        loaiSpViewModel.fetchData();
+//        loaiSpViewModel.fetchData();
         //Get du lieu tai khoan Google
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
@@ -225,7 +228,6 @@ public class LoaiSpActivity extends AppCompatActivity {
         toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
         btnSignOut = (Button) findViewById(R.id.btnsignout);
         listView= (ListView) findViewById(R.id.lvdanhsachsp);
-
         LoaiVatPhams = new ArrayList<>();
         dsAdapter = new LoaiSpAdapter(LoaiVatPhams,getApplicationContext());
         listView.setAdapter(dsAdapter);

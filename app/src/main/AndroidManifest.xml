@@ -13,7 +13,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ungdung">
-        <activity android:name=".Activity.PurchaseItemActivity"></activity>
         <activity android:name=".Activity.GoogleSignInActivity" />
         <activity android:name=".Activity.FacebookAuthActivity" />
         <activity android:name=".Activity.ChiTietSpActivity" />

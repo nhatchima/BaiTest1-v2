@@ -1,50 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/banner"
+    android:backgroundTint="#70DFDBDB"
+    android:backgroundTintMode="multiply"
     android:padding="16dp"
-    >
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/txttieude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ĐĂNG NHẬP"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        />
+        android:text="ĐĂNG NHẬP"
+        android:textColor="@color/purple_500"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/edtusername"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_below="@+id/txttieude"
         android:layout_marginTop="30dp"
-        android:layout_margin="30dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/custom_edittext"
-        android:ems="30"
-        android:hint="@string/username" />
+        android:drawableStart="@drawable/ic_email"
+        android:drawablePadding="12dp"
+        android:ems="10"
+        android:hint="@string/username"
+        android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/edtpassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_below="@+id/edtusername"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/custom_edittext"
+        android:drawableStart="@drawable/ic_lock"
+        android:drawablePadding="12dp"
         android:ems="30"
-        android:hint="@string/password" />
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:textSize="20sp" />
 
     <TextView
+        android:id="@+id/txtmessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edtpassword"
@@ -52,48 +61,72 @@
         android:layout_centerVertical="true"
         android:layout_marginTop="10dp"
         android:textSize="20sp"
-        android:visibility="gone"
 
         />
-    <Button
-        android:id="@+id/btnlogin"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:id="@+id/layout_btn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edtpassword"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/custom_button"
-        android:text="Đăng Nhập"
-        android:ems="10"
-        android:textColor="@color/white" />
+        android:layout_below="@+id/txtmessage"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/btnlogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edtpassword"
+            android:layout_margin="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/custom_button"
+            android:ems="10"
+            android:gravity="center"
+            android:text="Đăng Nhập"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btnregister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_toRightOf="@id/btnlogin"
+            android:layout_weight="1"
+            android:background="@drawable/custom_button"
+            android:ems="10"
+            android:gravity="center"
+            android:text="Đăng Ký"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/txtoption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hoặc đăng nhập với "
-        android:textColor="@color/black"
-        android:layout_below="@+id/btnlogin"
-        android:textSize="20sp"
-        android:gravity="center"
+        android:layout_below="@+id/layout_btn"
         android:layout_marginTop="20dp"
-        android:textStyle="bold"
-        />
+        android:gravity="center"
+        android:text="Hoặc đăng nhập với "
+        android:textColor="@color/price_button_grey"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtoption"
         android:layout_margin="20dp"
         android:orientation="horizontal"
-        android:weightSum="2"
-        >
+        android:weightSum="2">
 
         <com.google.android.gms.common.SignInButton
-            android:layout_weight="1"
             android:id="@+id/btngg"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_gravity="center_vertical"
-            />
+            android:layout_weight="1" />
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/btnfb"
@@ -102,4 +135,5 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1" />
     </LinearLayout>
+
 </RelativeLayout>
