@@ -5,19 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/banner"
-    android:backgroundTint="#70DFDBDB"
+    android:backgroundTint="#DA7C6F6F"
     android:backgroundTintMode="multiply"
+    android:gravity="center"
     android:padding="16dp"
     tools:context=".MainActivity">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/txtlogo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo"
+        ></de.hdodenhof.circleimageview.CircleImageView>
     <TextView
         android:id="@+id/txttieude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/txtlogo"
         android:text="ĐĂNG NHẬP"
-        android:textColor="@color/purple_500"
+        android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold" />
 
@@ -109,7 +118,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="Hoặc đăng nhập với "
-        android:textColor="@color/price_button_grey"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold" />
 

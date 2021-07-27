@@ -20,12 +20,14 @@ import com.example.ungdung.MainActivity;
 import com.example.ungdung.Model.LoaiVatPham;
 import com.example.ungdung.R;
 import com.example.ungdung.Util.CheckConnection;
+import com.example.ungdung.ViewModel.AuthViewModel;
 import com.example.ungdung.ViewModel.LoaiSpViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -46,8 +48,8 @@ public class LoaiSpActivity extends AppCompatActivity {
     List<LoaiVatPham> LoaiVatPhams;
     private LoaiSpAdapter dsAdapter;
     private LoaiSpViewModel loaiSpViewModel;
-
-
+    AuthViewModel authViewModel;
+    FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,14 +73,42 @@ public class LoaiSpActivity extends AppCompatActivity {
                 CatchOnItemListView(loaiVatPhams);
             }
         });
-
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        authViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
+                    @Override
+                    public void onChanged(FirebaseUser firebaseUser) {
+                        if (firebaseUser != null) {
+                            btnSignOut.setEnabled(true);
+                        } else {
+                            btnSignOut.setEnabled(false);
+                        }
+                    }
+                });
+        authViewModel.getLoggedOutLiveData().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean) {
+                    Toast.makeText(getApplicationContext(), "User Logged Out", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 //        loaiSpViewModel.fetchData();
-        //Get du lieu tai khoan Google
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+                //Get du lieu tai khoan Google
+                GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
             profileName.setText(acct.getDisplayName());
             profileEmail.setText(acct.getEmail());
             Picasso.get().load(acct.getPhotoUrl())
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .error(R.drawable.hot)
+                    .into(profileAvatar);
+        }
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // Name, email address, and profile photo Url
+            profileName.setText(user.getDisplayName());
+            profileEmail.setText(user.getEmail());
+            Picasso.get().load(user.getPhotoUrl())
                     .placeholder(R.drawable.ic_launcher_background)
                     .error(R.drawable.hot)
                     .into(profileAvatar);
@@ -92,6 +122,10 @@ public class LoaiSpActivity extends AppCompatActivity {
                     case R.id.btnsignout:
                         signOut();
                         revokeAccess();
+                        FirebaseAuth.getInstance().signOut();
+                        break;
+                    default:
+                        authViewModel.logOut();
                         FirebaseAuth.getInstance().signOut();
                         break;
                     // ...

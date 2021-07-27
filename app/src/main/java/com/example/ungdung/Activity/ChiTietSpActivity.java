@@ -67,7 +67,7 @@ public class ChiTietSpActivity extends AppCompatActivity implements PurchasesUpd
         }
         VatPham vatPham = (VatPham) bundle.get("thongtinvatpham");
         txtname.setText(vatPham.getTenvatpham());
-        txtgia.setText((vatPham.getGiavatpham()));
+        txtgia.setText((vatPham.getGiavatpham())+" VNĐ");
         Picasso.get().load(vatPham.getHinhanhvatpham())
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.hot)
@@ -78,7 +78,6 @@ public class ChiTietSpActivity extends AppCompatActivity implements PurchasesUpd
             @Override
             public void onClick(View v) {
                 setBillingClient();
-
             }
         });
     }
@@ -124,7 +123,6 @@ public class ChiTietSpActivity extends AppCompatActivity implements PurchasesUpd
                                             BillingFlowParams billingFlowParams = BillingFlowParams.newBuilder()
                                                     .setSkuDetails(skuDetails.get(skuDetails.size() - 1))
                                                     .build();
-
                                             int responseCode = billingClient.launchBillingFlow(ChiTietSpActivity.this, billingFlowParams).getResponseCode();
                                             Log.d("TAG", "onSkuDetailsResponse: " + responseCode);
                                         } else
@@ -143,7 +141,6 @@ public class ChiTietSpActivity extends AppCompatActivity implements PurchasesUpd
         ConsumeParams consumeParams = ConsumeParams.newBuilder()
                 .setPurchaseToken(purchase.getPurchaseToken())
                 .build();
-
         ConsumeResponseListener listener = new ConsumeResponseListener() {
             @Override
             public void onConsumeResponse(BillingResult billingResult, @NotNull String purchaseToken) {

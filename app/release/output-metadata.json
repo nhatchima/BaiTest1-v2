@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.base.sdk.payment",
+  "applicationId": "com.example.ungdung",
   "variantName": "release",
   "elements": [
     {

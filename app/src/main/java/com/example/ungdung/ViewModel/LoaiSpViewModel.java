@@ -45,13 +45,13 @@ public class LoaiSpViewModel extends ViewModel {
     }
     public void returnData(int id ){
         if (id == 1){
-            vatPhamList.add(new VatPham(1,1,"Kiếm gỗ","300.000 VND" ,R.drawable.sword2));
-            vatPhamList.add(new VatPham(2,1,"Kiếm laze","200.000 VND" , R.drawable.sword3));
-            vatPhamList.add(new VatPham(3,1,"Kiếm katana","100.000 VND" , R.drawable.sword4));
+            vatPhamList.add(new VatPham(1,1,"Kiếm gỗ","300.000 " ,R.drawable.sword2));
+            vatPhamList.add(new VatPham(2,1,"Kiếm laze","200.000 " , R.drawable.sword3));
+            vatPhamList.add(new VatPham(3,1,"Kiếm katana","100.000 " , R.drawable.sword4));
         } else{
-            vatPhamList.add(new VatPham(4,2,"Khiên gỗ", "300.000 VND" ,R.drawable.shield2));
-            vatPhamList.add(new VatPham(5,2,"Khiên bạc", "200.000 VND" ,R.drawable.shield3));
-            vatPhamList.add(new VatPham(6,2,"Khiên đồng","100.000 VND" ,R.drawable.shield4));
+            vatPhamList.add(new VatPham(4,2,"Khiên gỗ", "300.000 " ,R.drawable.shield2));
+            vatPhamList.add(new VatPham(5,2,"Khiên bạc", "200.000 " ,R.drawable.shield3));
+            vatPhamList.add(new VatPham(6,2,"Khiên đồng","100.000 " ,R.drawable.shield4));
 
         }
         mListVatPhamLiveData.setValue(vatPhamList);

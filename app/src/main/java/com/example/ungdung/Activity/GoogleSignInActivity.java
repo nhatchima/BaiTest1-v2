@@ -1,18 +1,13 @@
 package com.example.ungdung.Activity;
 
 
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
-import com.example.ungdung.Activity.LoaiSpActivity;
 import com.example.ungdung.MainActivity;
-import com.example.ungdung.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
@@ -20,8 +15,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 
 public class GoogleSignInActivity extends MainActivity {
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,17 +26,8 @@ public class GoogleSignInActivity extends MainActivity {
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        signInGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (view.getId()) {
-                    case R.id.btngg:
-                        signIn();
-                        break;
-                    // ...
-                }
-            }
-        });
+        signIn();
+
     }
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
