@@ -1,5 +1,13 @@
 # BaiTest1
-Cập nhật lần 1 
+Chức năng ứng dụng:
+- Đăng nhập bằng Google gmail
+- Tạo tài khoản đăng nhập bằng firebase;
+- Đăng nhập bằng Facebook;
+- Hiển thị thông tin tài khoản sau đăng nhập người dùng
+- Hiển thị danh sách loại vật phẩm -> click vào sẽ ra danh sách các vật phẩm tương ứng -> click vào mỗi vật phẩm sẽ ra chi tiết vật phẩm 
+- Tích hợp Play Asset Delivery(PAD) theo kiểu install-time chứa một clip để play
+- Tích hợp Play Feature Delivery(PFD) chứa chức năng thanh toán.
+
 HDSD:
 1. Import file item.sql lên localhost mysql
 2. Copy API PHP vào htdocs 
