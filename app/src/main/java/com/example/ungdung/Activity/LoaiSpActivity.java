@@ -22,8 +22,14 @@ import com.example.ungdung.R;
 import com.example.ungdung.Util.CheckConnection;
 import com.example.ungdung.ViewModel.AuthViewModel;
 import com.example.ungdung.ViewModel.LoaiSpViewModel;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,7 +41,6 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.example.ungdung.Activity.GoogleSignInActivity.mGoogleSignInClient;
 
 
 public class LoaiSpActivity extends AppCompatActivity {
@@ -49,7 +54,9 @@ public class LoaiSpActivity extends AppCompatActivity {
     private LoaiSpAdapter dsAdapter;
     private LoaiSpViewModel loaiSpViewModel;
     AuthViewModel authViewModel;
-    FirebaseUser firebaseUser;
+    public static GoogleSignInClient mGoogleSignInClient;
+    public static final int RC_SIGN_IN = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,21 +65,23 @@ public class LoaiSpActivity extends AppCompatActivity {
 
         initView();
         ActionToolBar();
-//        CatchOnItemListView();
-//        GetDuLieuSpMoiNhat();
-//        GetDulieuLoaiSp();
 
+        /**
+         * Use ViewModel to return data and push into layout
+         */
         loaiSpViewModel = new ViewModelProvider(this).get(LoaiSpViewModel.class);
         loaiSpViewModel.getListLoaiSpLiveData().observe(this, new Observer<List<LoaiVatPham>>() {
             @Override
             public void onChanged(List<LoaiVatPham> loaiVatPhams) {
-//                dsAdapter.setLoaiVatPhams(loaiVatPhams);
-//                CatchOnItemListView(loaiVatPhams);
+
                 dsAdapter = new LoaiSpAdapter(loaiVatPhams,getApplicationContext());
                 listView.setAdapter(dsAdapter);
                 CatchOnItemListView(loaiVatPhams);
             }
         });
+        /**
+         * Use ViewModel to call function signout
+         */
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
         authViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
                     @Override
@@ -92,9 +101,10 @@ public class LoaiSpActivity extends AppCompatActivity {
                 }
             }
         });
-//        loaiSpViewModel.fetchData();
-                //Get du lieu tai khoan Google
-                GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        /**
+         * Get information account to layout
+         */
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
             profileName.setText(acct.getDisplayName());
             profileEmail.setText(acct.getEmail());
@@ -113,7 +123,9 @@ public class LoaiSpActivity extends AppCompatActivity {
                     .error(R.drawable.hot)
                     .into(profileAvatar);
         }
-
+        /**
+         * Sign out button
+         */
         btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,15 +138,43 @@ public class LoaiSpActivity extends AppCompatActivity {
                         break;
                     default:
                         authViewModel.logOut();
+                        disconnectFromFacebook();
                         FirebaseAuth.getInstance().signOut();
                         break;
                     // ...
                 }
             }
         });
-
     }
 
+    /**
+     * Delete token when sign out facebook
+     */
+    public void disconnectFromFacebook()
+    {
+        if (AccessToken.getCurrentAccessToken() == null) {
+            return; // already logged out
+        }
+
+        new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/me/permissions/",
+                null,
+                HttpMethod.DELETE,
+                new GraphRequest
+                        .Callback() {
+                    @Override
+                    public void onCompleted(GraphResponse graphResponse)
+                    {
+                        LoginManager.getInstance().logOut();
+                    }
+                })
+                .executeAsync();
+    }
+
+    /**
+     * Sign Out Google Account and Revoke permission access
+     */
     private void signOut() {
         mGoogleSignInClient.signOut()
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
@@ -155,6 +195,11 @@ public class LoaiSpActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    /**
+     * Click on listview item to open new activity
+     * @param loaiVatPhams
+     */
     private void CatchOnItemListView(List<LoaiVatPham> loaiVatPhams) {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -190,71 +235,6 @@ public class LoaiSpActivity extends AppCompatActivity {
             }
         });
     }
-//    private void GetDuLieuSpMoiNhat() {
-//        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-//        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.pathspmoinhat, new Response.Listener<JSONArray>() {
-//            @Override
-//            public void onResponse(JSONArray response) {
-//                if (response != null) {
-//                    int id = 0;
-//                    String tenVatPham = "";
-//                    int giaVatPham = 0;
-//                    String hinhanhVatPham = "";
-//                    int IdVatPham = 0;
-//                    for (int i = 0; i < response.length(); i++) {
-//                        try {
-//                            JSONObject jsonObject = response.getJSONObject(i);
-//                            id = jsonObject.getInt("idvatpham");
-//                            tenVatPham = jsonObject.getString("tenvatpham");
-//                            giaVatPham = jsonObject.getInt("giavatpham");
-//                            hinhanhVatPham = jsonObject.getString("anhvatpham");
-//                            IdVatPham = jsonObject.getInt("idloaivatpham");
-//                            vatPhams.add(new VatPham(id, IdVatPham, tenVatPham, giaVatPham, hinhanhVatPham));
-//                            spAdapter.notifyDataSetChanged();
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        });
-//        requestQueue.add(jsonArrayRequest);
-//    }
-//
-//    private void GetDulieuLoaiSp(){
-//        RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
-//        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Server.pathloaisp, new Response.Listener<JSONArray>() {
-//            @Override
-//            public void onResponse(JSONArray response) {
-//                if(response!=null){
-//                    for(int i=0;i<response.length();i++){
-//                        try{
-//                            JSONObject jsonObject=response.getJSONObject(i);
-//                            id=jsonObject.getInt("idloaivatpham");
-//                            loaisanpham=jsonObject.getString("tenloaivatpham");
-//                            hinhanhsanpham=jsonObject.getString("hinhloaivatpham");
-//                            LoaiVatPhams.add(new LoaiVatPham(id,loaisanpham,hinhanhsanpham));
-//                            dsAdapter.notifyDataSetChanged();
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        });
-//        requestQueue.add(jsonArrayRequest);
-//    }
-
     private void initView() {
         profileAvatar = findViewById(R.id.profileavatar);
         profileName = findViewById(R.id.profilename);
@@ -267,7 +247,9 @@ public class LoaiSpActivity extends AppCompatActivity {
         listView.setAdapter(dsAdapter);
 
     }
-
+    /**
+     * Show Toolbar on the top
+     */
     private void ActionToolBar() {
         //truyen vao thanh toolbar
         setSupportActionBar(toolbar);
@@ -281,7 +263,6 @@ public class LoaiSpActivity extends AppCompatActivity {
             }
         });
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

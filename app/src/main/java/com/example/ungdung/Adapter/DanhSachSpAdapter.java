@@ -61,8 +61,9 @@ public class DanhSachSpAdapter extends RecyclerView.Adapter<DanhSachSpAdapter.It
             }
         });
     }
+//
     private void onClickGoToDetail(VatPham vatPham){
-        Intent intent = new Intent(context, ChiTietSpActivity.class);
+        Intent intent = new Intent(context,ChiTietSpActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("thongtinvatpham",vatPham);
         intent.putExtras(bundle);

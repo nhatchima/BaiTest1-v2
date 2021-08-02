@@ -13,22 +13,24 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/txtlogo"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/logo"
         ></de.hdodenhof.circleimageview.CircleImageView>
+
     <TextView
         android:id="@+id/txttieude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/txtlogo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:layout_below="@+id/txtlogo"
         android:text="ĐĂNG NHẬP"
         android:textColor="@color/white"
         android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        />
 
     <EditText
         android:id="@+id/edtusername"
@@ -66,12 +68,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edtpassword"
+        android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
-        android:layout_centerVertical="true"
         android:layout_marginTop="10dp"
-        android:textSize="20sp"
-
-        />
+        android:layout_marginRight="10dp"
+        android:clickable="true"
+        android:text="Quên Mật Khẩu ?"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/layout_btn"
@@ -79,7 +84,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtmessage"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="2"
+        android:layout_marginTop="15dp">
 
         <Button
             android:id="@+id/btnlogin"
@@ -116,7 +122,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout_btn"
         android:layout_marginTop="20dp"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:text="Hoặc đăng nhập với "
         android:textColor="@color/white"
         android:textSize="20sp"
@@ -126,23 +132,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtoption"
-        android:layout_margin="20dp"
+        android:layout_marginTop="40dp"
         android:orientation="horizontal"
         android:weightSum="2">
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/btngg"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            style="@style/GoogleLoginButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1" />
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/btnfb"
-            android:layout_width="110dp"
+            style="@style/FacebookLoginButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1" />
     </LinearLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@id/txtoption"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:layout_centerInParent="true"/>
 
 </RelativeLayout>

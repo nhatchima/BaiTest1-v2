@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/ungdung/app/src/main/res/layout/activity_chi_tiet_sp.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/ungdung/app/src/main/res/layout/activity_danh_sach_sp.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/ungdung/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/ungdung/app/src/main/res/layout/rv_danhsachvatpham.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/ungdung/dynamic_feature_install_thanh_toan/src/main/res/layout/activity_google_sign_in.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/ungdung/dynamic_feature_on_demand/src/main/res/layout/activity_billing.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/ungdung/dynamic_feature_on_demand/src/main/res/layout/activity_google_sign_in.xml" value="0.115625" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/ungdung/dynamic_feature_on_demand/src/main/res/layout/activity_main.xml" value="0.23645833333333333" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectPlainTextFileTypeManager">
     <file url="file://$PROJECT_DIR$/app/demosdkmain.jks" />
   </component>

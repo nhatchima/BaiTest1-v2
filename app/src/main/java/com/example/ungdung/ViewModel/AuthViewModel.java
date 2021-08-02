@@ -29,8 +29,8 @@ public class AuthViewModel extends AndroidViewModel {
         firebaseAuth = FirebaseAuth.getInstance();
         loggedOutLiveData = authAppRepository.getLoggedOutLiveData();
         loginLiveData = authAppRepository.getLoginLiveData();
-    }
 
+    }
 
     public void login(String email, String password) {
         authAppRepository.login(email, password);

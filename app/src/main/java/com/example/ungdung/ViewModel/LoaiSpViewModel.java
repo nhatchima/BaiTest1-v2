@@ -1,5 +1,8 @@
 package com.example.ungdung.ViewModel;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -43,11 +46,13 @@ public class LoaiSpViewModel extends ViewModel {
 
 
     }
+    @RequiresApi(api = Build.VERSION_CODES.R)
     public void returnData(int id ){
         if (id == 1){
             vatPhamList.add(new VatPham(1,1,"Kiếm gỗ","300.000 " ,R.drawable.sword2));
             vatPhamList.add(new VatPham(2,1,"Kiếm laze","200.000 " , R.drawable.sword3));
             vatPhamList.add(new VatPham(3,1,"Kiếm katana","100.000 " , R.drawable.sword4));
+
         } else{
             vatPhamList.add(new VatPham(4,2,"Khiên gỗ", "300.000 " ,R.drawable.shield2));
             vatPhamList.add(new VatPham(5,2,"Khiên bạc", "200.000 " ,R.drawable.shield3));

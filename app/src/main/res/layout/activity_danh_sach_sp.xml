@@ -42,8 +42,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:background="?selectableItemBackground"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/lvchitietsp"
         >
     </androidx.recyclerview.widget.RecyclerView>
+        <VideoView
+            android:id="@+id/videoView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
 </LinearLayout>

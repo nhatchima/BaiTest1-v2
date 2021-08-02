@@ -11,12 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.ungdung.Activity.FacebookAuthActivity;
-import com.example.ungdung.Activity.GoogleSignInActivity;
 import com.example.ungdung.Activity.LoaiSpActivity;
 import com.example.ungdung.ViewModel.AuthViewModel;
 import com.facebook.login.widget.LoginButton;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.SignInButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,17 +21,15 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static GoogleSignInClient mGoogleSignInClient;
-    public static final int RC_SIGN_IN = 0;
     public SignInButton signInGoogle;
     LoginButton signInFacebook;
     EditText edtEmail, edtPassword;
     Button btnLogin,btnRegister;
     AuthViewModel authViewModel;
     String emailPattern ="[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-
     public static FirebaseAuth mAuth;
     public static FirebaseUser mUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
         initView();
 
-
+        /**
+         * Call ViewModel to set Login button
+         */
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
         authViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
             @Override
@@ -57,9 +54,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        /**
+         * Check user already have or not
+         */
         if (mUser == null) {
             Toast.makeText(this, "Vui lòng đăng nhập", Toast.LENGTH_SHORT).show();
         }
+        /**
+         * Use ViewModel to call function Login
+         */
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
         authViewModel.getLoginLiveData().observe(this, new Observer<Boolean>() {
             @Override
@@ -73,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
         signInGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, GoogleSignInActivity.class);
+                Intent intent = new Intent();
+                intent.setClassName(BuildConfig.APPLICATION_ID,"com.example.thanhtoan.GoogleSignInActivity");
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
             }
@@ -81,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
         signInFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, FacebookAuthActivity.class);
+                Intent intent = new Intent();
+                intent.setClassName(BuildConfig.APPLICATION_ID,"com.example.thanhtoan.FacebookSignInActivity");
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
 
@@ -113,6 +118,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
       }
+    /**
+     * initialize to Xml
+     */
     private void initView() {
         signInGoogle = findViewById(R.id.btngg);
         signInGoogle.setSize(SignInButton.SIZE_STANDARD);
@@ -121,5 +129,6 @@ public class MainActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnregister);
         edtEmail = (EditText) findViewById(R.id.edtusername);
         edtPassword = (EditText) findViewById(R.id.edtpassword);
+
     }
 }

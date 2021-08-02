@@ -4,13 +4,16 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="testRunner" value="PLATFORM" />
+        <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/dynamic_feature_install_thanh_toan" />
+            <option value="$PROJECT_DIR$/dynamic_feature_on_demand" />
+            <option value="$PROJECT_DIR$/install_time_assets_pack" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
