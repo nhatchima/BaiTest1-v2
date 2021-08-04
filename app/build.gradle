@@ -10,20 +10,20 @@ android {
     buildToolsVersion "30.0.0"
     signingConfigs {
         debug {
-            keyAlias 'demosdkmain'
-            keyPassword 'B23041D596A5F4BCE51042F89E9BEBF4'
-            storeFile file('\\demosdkmain.jks')
-            storePassword 'B23041D596A5F4BCE51042F89E9BEBF4'
+            keyAlias 'keystore'
+            keyPassword 'iljimaes1962'
+            storeFile file('\\keystore.jks')
+            storePassword 'iljimaes1962'
         }
         release {
-            keyAlias 'demosdkmain'
-            keyPassword 'B23041D596A5F4BCE51042F89E9BEBF4'
-            storeFile file('\\demosdkmain.jks')
-            storePassword 'B23041D596A5F4BCE51042F89E9BEBF4'
+            keyAlias 'keystore'
+            keyPassword 'iljimaes1962'
+            storeFile file('\\keystore.jks')
+            storePassword 'iljimaes1962'
         }
     }
     defaultConfig {
-        applicationId "com.example.ungdung"
+        applicationId "com.name.ungdung"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1

@@ -18,7 +18,7 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
         <activity
-            android:name=".FacebookSignInActivity"
+            android:name="com.name.thanhtoan.FacebookSignInActivity"
             android:exported="true" />
         <activity
             android:name="com.facebook.CustomTabActivity"
@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".GoogleSignInActivity"
+            android:name="com.name.thanhtoan.GoogleSignInActivity"
             android:exported="true" />
     </application>
 

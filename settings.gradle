@@ -1,4 +1,4 @@
-rootProject.name = "ungdung"
+rootProject.name = "BaiTest1-v2"
 include ':app'
 include ':dynamic_feature_install_thanh_toan'
 include ':install_time_assets_pack'

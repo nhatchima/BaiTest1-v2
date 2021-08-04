@@ -5,10 +5,10 @@ apply plugin: 'com.android.dynamic-feature'
 android {
     signingConfigs {
         debug {
-            storeFile file('C:\\Users\\Admin\\AndroidStudioProjects\\ungdung\\app\\demosdkmain.jks')
-            storePassword 'B23041D596A5F4BCE51042F89E9BEBF4'
-            keyPassword 'B23041D596A5F4BCE51042F89E9BEBF4'
-            keyAlias 'demosdkmain'
+            storeFile file('C:\\Users\\Admin\\AndroidStudioProjects\\ungdung\\app\\keystore.jks')
+            storePassword 'iljimaes1962'
+            keyPassword 'iljimaes1962'
+            keyAlias 'keystore'
         }
     }
     compileSdkVersion 30

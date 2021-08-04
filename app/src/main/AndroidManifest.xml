@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ungdung">
+    package="com.name.ungdung">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -9,7 +9,7 @@
     <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
-        android:name=".Util.Application"
+        android:name="com.name.ungdung.Util.Application"
         android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,10 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ungdung">
-        <activity android:name=".Activity.ChiTietSpActivity" />
-        <activity android:name=".Activity.DanhSachSpActivity" />
-        <activity android:name=".Activity.LoaiSpActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.name.ungdung.Activity.ChiTietSpActivity" />
+        <activity android:name="com.name.ungdung.Activity.DanhSachSpActivity" />
+        <activity android:name="com.name.ungdung.Activity.LoaiSpActivity" />
+        <activity android:name="com.name.ungdung.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

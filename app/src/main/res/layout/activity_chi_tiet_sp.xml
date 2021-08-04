@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.ungdung.Activity.ChiTietSpActivity"
+    tools:context="com.example.ungdung.com.name.ungdung.Activity.ChiTietSpActivity"
 
     >
 

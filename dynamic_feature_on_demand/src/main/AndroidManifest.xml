@@ -14,7 +14,7 @@
 
     <application>
         <activity
-            android:name=".Billing"
+            android:name="com.name.dynamicfeature.Billing"
              />
     </application>
 
